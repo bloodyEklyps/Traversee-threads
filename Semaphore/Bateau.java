@@ -10,16 +10,44 @@ class Bateau extends MonThread
 
   public void run()
   {
-    // le bateau ne s'arrete jamais
-    while( true )
+    while(true)
     {
-      //while bateau pas plein wait
-      voyageAller(); // le bateau fait le voyage aller
-      //notify je suis la
+      //tant que bateau pas plein, on attend
+      lockDonnees.askToken();
       
-      //while bateau pas vide wait
-      voyageRetour(); // le bateau fait le voyage retour
-      //notify je suis arrivé
+      if(nb_loup >= 3 || nb_chevre >=3 || (nb_chevre >= 2 && nb_loup == 1)){
+    	  lockDonnees.freeToken();
+    	  
+    	  if(nb_loup >= 3){
+        	  lockBateauPlaceLoup.freeToken();
+        	  lockBateauPlaceLoup.freeToken();
+        	  lockBateauPlaceLoup.freeToken();
+    	  } else if (nb_chevre >=3) {
+        	  lockBateauPlaceChevre.freeToken();
+        	  lockBateauPlaceChevre.freeToken();
+        	  lockBateauPlaceChevre.freeToken();
+    	  } else if(nb_chevre >= 2 && nb_loup == 1){
+        	  lockBateauPlaceLoup.freeToken();
+        	  lockBateauPlaceChevre.freeToken();
+        	  lockBateauPlaceChevre.freeToken();
+    	  }
+    	  
+    	  lockBateauPret.askToken();
+    	  lockBateauPret.askToken();
+    	  lockBateauPret.askToken();
+	      voyageAller(); // le bateau fait le voyage aller
+	      
+	      lockBateauArrive.freeToken();
+	      lockBateauArrive.freeToken();
+	      lockBateauArrive.freeToken();
+	      
+	      //while bateau pas vide wait
+	      voyageRetour(); // le bateau fait le voyage retour
+
+	      //notify je suis arrivé
+      } else {
+    	  lockDonnees.freeToken();
+      }
     }
   }
 	
