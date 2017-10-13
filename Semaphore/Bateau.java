@@ -26,7 +26,7 @@ class Bateau extends MonThread
         	  lockBateauPlaceChevre.freeToken();
         	  lockBateauPlaceChevre.freeToken();
         	  lockBateauPlaceChevre.freeToken();
-    	  } else if(nb_chevre >= 2 && nb_loup == 1){
+    	  } else if(nb_chevre >= 2 && nb_loup >= 1){
         	  lockBateauPlaceLoup.freeToken();
         	  lockBateauPlaceChevre.freeToken();
         	  lockBateauPlaceChevre.freeToken();

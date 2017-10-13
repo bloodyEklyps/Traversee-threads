@@ -35,9 +35,5 @@ class Semaphore
 	    ++_counter;
 	    notifyAll();
 	  }
-	  
-	  synchronized public int getTokens(){
-		  return _counter;
-	  }
 }
 
